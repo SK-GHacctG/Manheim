@@ -44,7 +44,7 @@ resource "aws_ecs_service" "my_web_service" {
 
   network_configuration {
     subnets = [var.var_subnet_id1, var.var_subnet_id2, var.var_subnet_id3]
-    security_groups = [aws_security_group.my_web_server_sg.id]
+    security_groups = [aws_security_group.my_web_server_sg.id, aws_security_group.my_ecs_sg.id]
   }
   
   load_balancer {
