@@ -1,3 +1,5 @@
+# Defining Application Load Balancer
+#
 resource "aws_lb" "my_web_alb" {
   name               = "my-web-alb"
   internal           = false
@@ -7,7 +9,7 @@ resource "aws_lb" "my_web_alb" {
 
   enable_deletion_protection = true
 
-  # Assuming the backet already exists, or the name is available to create
+  # Assuming the bucket already exists, or the name is available to create
   #
   access_logs {
     bucket = "sklogbucket"
@@ -17,5 +19,39 @@ resource "aws_lb" "my_web_alb" {
 
   tags = {
     Environment = "staging"
+  }
+}
+
+
+# Defining the target group and a health check on the application
+#
+resource "aws_lb_target_group" "my_target_group" {
+  name                      = "my-ex-tg"
+  port                      = 8081
+  protocol                  = "HTTP"
+  target_type               = "ip"
+  vpc_id                    = var.var_vpc_id
+  health_check {
+      path                  = "/health"
+      protocol              = "HTTP"
+      matcher               = "200"
+      port                  = "traffic-port"
+      healthy_threshold     = 2
+      unhealthy_threshold   = 2
+      timeout               = 30
+      interval              = 60
+  }
+}
+
+# Defines an HTTP Listener for the ALB
+#
+resource "aws_lb_listener" "my_listener" {
+  load_balancer_arn         = aws_alb.my_web_alb.arn
+  port                      = "80"
+  protocol                  = "HTTP"
+
+  default_action {
+    type                    = "forward"
+    target_group_arn        = aws_lb_target_group.my_target_group.arn
   }
 }
