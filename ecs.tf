@@ -1,19 +1,22 @@
 # ECS Cluster definition
+#
 resource "aws_ecs_cluster" "web_app_cluster" {
   name = "web-app-cluster"
 }
 
-# Fargate Task Definition (replace with your container image and configuration)
+# Fargate Task Definition 
+#
 resource "aws_ecs_task_definition" "my_web_task" {
   family = "my-web-task-definition"
-  cpu    = "1024"       # after careful analysis of usage metrics we can adjust it down or up
-  memory = "2048"       # after careful analysis of usage metrics we can adjust it up or down
+  cpu    = "1024"       # After careful analysis of usage metrics we can adjust it up or down
+  memory = "2048"       # After careful analysis of usage metrics we can adjust it up or down
   network_mode = "awsvpc"
   requires_compatibilities = ["FARGATE"]
 
   # Container definition 
-  # if there is an issue loading nginx:latest,
+  # In case there is an issue loading nginx:latest, a Dockerfile and config files are added;
   # we can create a docker image and push it to ECR, which we can use here
+  #
   container_definitions = <<EOF
 [
   {
@@ -31,9 +34,9 @@ EOF
 }
 
 # ECS Service definition
-# this is not an ideal case, nor secured case - allowing NAT gateway to allow incoming internet traffic
-# directly to the container instance by assigning a public ip address
-# Alternatively, we can have a ALB in between to have the public ip exposed
+# This is not an ideal case, nor a secured case - have NAT gateway to allow incoming internet traffic
+# directly to the container instance by assigning a public IP address
+# Alternatively, we can have an ALB in between, to have the public IP exposed
 resource "aws_ecs_service" "my_web_service" {
   name = "my-web-service"
   cluster = aws_ecs_cluster.web_app_cluster.arn
