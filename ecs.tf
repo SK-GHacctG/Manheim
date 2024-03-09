@@ -40,11 +40,19 @@ resource "aws_ecs_service" "my_web_service" {
   cluster = aws_ecs_cluster.web_app_cluster.arn
   launch_type = "FARGATE"
   task_definition = aws_ecs_task_definition.my_web_task.arn
+  desired_count = 2
+
   network_configuration {
     subnets = [var.var_subnet_id1, var.var_subnet_id2, var.var_subnet_id3]
     security_groups = [aws_security_group.my_web_server_sg.id]
   }
-  desired_count = 2
+  
+  load_balancer {
+    target_group_arn = aws_lb_target_group.??.arn
+    container_name = "myWebServerContainer"
+    container_port = 8080
+  }
+
   deployment_configuration {
     minimum_healthy_percent = 100
     maximum_percent         = 200
