@@ -27,7 +27,7 @@ resource "aws_lb" "my_web_alb" {
 #
 resource "aws_lb_target_group" "my_target_group" {
   name                      = "my-ex-tg"
-  port                      = 8081
+  port                      = 8080
   protocol                  = "HTTP"
   target_type               = "ip"
   vpc_id                    = var.var_vpc_id
