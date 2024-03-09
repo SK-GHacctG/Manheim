@@ -7,8 +7,10 @@ resource "aws_lb" "my_web_alb" {
 
   enable_deletion_protection = true
 
+  # Assuming the backet already exists, or the name is available to create
+  #
   access_logs {
-    bucket = "sktfstatebucket"
+    bucket = "sklogbucket"
     prefix  = "skproject1log/my-web-alb"
     enabled = true
   }
