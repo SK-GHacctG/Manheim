@@ -5,7 +5,7 @@ resource "aws_lb" "my_web_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.my_web_server_sg.id]
-  subnets            = [var.var_subnet_id1,var.var_subnet_id2]
+  subnets            = [var.var_subnet_id1,var.var_subnet_id2, var.var_subnet_id3]
 
   enable_deletion_protection = true
 
@@ -38,8 +38,8 @@ resource "aws_lb_target_group" "my_target_group" {
       port                  = "traffic-port"
       healthy_threshold     = 2
       unhealthy_threshold   = 2
-      timeout               = 30
-      interval              = 60
+      timeout               = 30          # can be adjusted up and down
+      interval              = 60          # can be adjusted up and down
   }
 }
 
