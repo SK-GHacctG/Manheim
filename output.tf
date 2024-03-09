@@ -1,5 +1,5 @@
-# output my application load balaner's put dns name
-# for external used to access web site using this url 
+# Output - application load balancer's DNS name
+# for external users to access the website using this URL 
 #
 data aws_lb my_alb_public_ip {
     name = aws_lb.my_web_alb.name
@@ -8,5 +8,3 @@ data aws_lb my_alb_public_ip {
 output my_alb_dns_name {
     value = aws_lb.my_web_alb.dns_name
 }
-
-# https://github.com/SK-GHacctG/Manheim.git
