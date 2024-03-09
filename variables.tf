@@ -32,4 +32,12 @@ variable "var_subnet_id2" {
   description = "Assuming this is another public subnet within the VPC"
 }
 
+# Private subnet | Subnet id 3
+#
+variable "var_subnet_id3" {
+  type = string
+  default = "subnet-0e3a476b68b9bbnm4"      # This subnet id is not a real one; assuming this is a subnet given.
+  description = "Assuming this is another private subnet within the VPC"
+}
+
 # More subnets may be needed in real network
