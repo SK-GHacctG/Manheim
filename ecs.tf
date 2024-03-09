@@ -34,16 +34,14 @@ EOF
 }
 
 # ECS Service definition
-# This is not an ideal case, nor a secured case - have NAT gateway to allow incoming internet traffic
-# directly to the container instance by assigning a public IP address
-# Alternatively, we can have an ALB in between, to have the public IP exposed
+# 
 resource "aws_ecs_service" "my_web_service" {
   name = "my-web-service"
   cluster = aws_ecs_cluster.web_app_cluster.arn
   launch_type = "FARGATE"
   task_definition = aws_ecs_task_definition.my_web_task.arn
   network_configuration {
-    subnets = [var.var_subnet_id1, var.var_subnet_id2]
+    subnets = [var.var_subnet_id1, var.var_subnet_id2, var.var_subnet_id3]
     security_groups = [aws_security_group.my_web_server_sg.id]
   }
   desired_count = 2
