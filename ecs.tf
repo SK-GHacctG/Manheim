@@ -48,7 +48,7 @@ resource "aws_ecs_service" "my_web_service" {
   }
   
   load_balancer {
-    target_group_arn = aws_lb_target_group.??.arn
+    target_group_arn = aws_lb_target_group.my_target_group.arn
     container_name = "myWebServerContainer"
     container_port = 8080
   }
