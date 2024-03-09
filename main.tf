@@ -1,6 +1,6 @@
 #
-# AWS account access needed; if not an authorized user in the account, 
-# the access_key and Secret_key are needed
+# If not an authorized user in the account, AWS account access is needed;  
+# the Access_key and the Secret_key are needed
 #
 provider "aws" {
   region = var.myregion
