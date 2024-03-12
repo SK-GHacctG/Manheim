@@ -9,7 +9,7 @@ provider "aws" {
 }
 
 # Backend definition
-#
+# Assuming the bucket, sktfstatebucket, is available.
 terraform {
   required_version = ">= 0.13"
 
